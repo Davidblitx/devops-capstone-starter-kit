@@ -16,6 +16,10 @@ spec:
         app: vote
         {{- include "voting-app.labels" . | nindent 8 }}
     spec:
+      securityContext:
+        sysctls:
+        - name: net.ipv4.ip_unprivileged_port_start
+          value: "0"
       containers:
         - name: vote
           image: "{{ .Values.vote.image.repository }}:{{ default .Values.vote.image.tag .Values.global.tag }}"
